@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
 
+typedef struct IUnknown IUnknown;
+
 #define NOMINMAX
 #include <Windows.h>
 
@@ -69,12 +71,12 @@ std::vector<std::wstring> GetPaths()
 	if (argc > 0)
 	{
 		result.reserve((size_t)argc - 1);
-		for (size_t iArg = 1; iArg < argc; ++iArg)
+		for (size_t iArg = 1; iArg < (size_t)argc; ++iArg)
 		{
 			std::wstring s = argv[iArg];
 
 			// remove trailing slashes
-			while (s.ends_with(L'\\') || s.ends_with(L'/'))
+			while (!s.empty() && s[s.length() - 1] == L'\\' || s[s.length() - 1] == L'/')
 			{
 				s.resize(s.length() - 1);
 			}
